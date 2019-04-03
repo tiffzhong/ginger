@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./Articles.scss";
+import ArticleSummary from "./ArticleSingle/ArticleSummary";
+import ArticleTitle from "./ArticleSingle/ArticleTitle";
 import { Link } from "react-router-dom";
 var parseString = require("xml2js").parseString;
 
@@ -8,12 +10,18 @@ class ArticlesDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articles: []
+      articles: [],
+      filtered: []
     };
   }
 
   componentDidMount() {
     this.getArticles();
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.path !== this.props.match.path) {
+      this.filtered();
+    }
   }
 
   getArticles = () => {
@@ -32,7 +40,24 @@ class ArticlesDisplay extends Component {
       })
       .catch(err => console.log("axios get", err));
   };
+
+  filtered = () => {
+    if (this.props.match.path === "/summaries/:id") {
+      let filteredArticle = this.state.articles.filter(article => {
+        let unique = article.id[0]
+          .split("")
+          .slice(21)
+          .join("");
+        return unique === this.props.match.params.id;
+      });
+      this.setState({
+        filtered: filteredArticle
+      });
+    }
+  };
+
   render() {
+    console.log(this.props, "props in container");
     const { articles } = this.state;
     let allArticles = articles.map(a => {
       let b = a.author.map(author => author.name);
@@ -40,23 +65,38 @@ class ArticlesDisplay extends Component {
       console.log(b, "b");
       return (
         <div className="article-container">
-          Title:
-          <Link to={`/summaries/${a.id[0]}`}>{a.title}</Link>
-          {/* <ArticleSummary
-            key={a.id}
+          <ArticleTitle
+            id={a.id}
+            title={a.title}
             summary={a.summary}
             published={a.published}
-            author={b.join(" ")}
-          /> */}
+            author={b}
+            match={this.props.match}
+          />
         </div>
       );
     });
 
+    // let unique = props.id[0]
+    // .split("")
+    // .slice(21)
+    // .join("");
+
+    console.log(this.state.filtered[0], "filter");
     return (
-      <>
-        Articles: {allArticles}
-        {/* Author Names: {authorNames} */}
-      </>
+      <div>
+        {this.props.match.path === "/summaries/:id" &&
+        this.state.filtered[0] ? (
+          <ArticleSummary
+            title={this.state.filtered[0].title}
+            summary={this.state.filtered[0].summary}
+            published={this.state.filtered[0].published}
+            author={this.state.filtered[0].author}
+          />
+        ) : (
+          allArticles
+        )}
+      </div>
     );
   }
 }
