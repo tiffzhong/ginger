@@ -1,13 +1,20 @@
 import React from "react";
-// import "../Articles.scss";
 const ArticleSummary = props => {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {};
-  // }
-
   console.log(props, "propperpoo");
-  return <div>{props.published}</div>;
+  let authors = props.author.map(authorname => authorname.name);
+
+  return (
+    <div>
+      Title:{props.title}
+      <br />
+      Authors:
+      {authors}
+      <br />
+      Published: {props.published}
+      <br />
+      Summary: {props.summary}
+    </div>
+  );
 };
 
 export default ArticleSummary;

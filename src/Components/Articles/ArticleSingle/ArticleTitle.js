@@ -10,16 +10,6 @@ const ArticleTitle = props => {
     .join("");
   return (
     <div>
-      {/* {props.match.path === "/summaries/:id" &&
-      unique === props.match.params.id ? (
-        <ArticleSummary
-          title={props.title}
-          summary={props.summary}
-          published={props.published}
-          author={props.author}
-          match={props.match.params.id}
-        />
-      ) : ( */}
       <Link to={`/summaries/${unique}`} alt="articlelink">
         {props.title}
       </Link>

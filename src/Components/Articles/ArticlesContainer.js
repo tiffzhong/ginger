@@ -3,7 +3,6 @@ import axios from "axios";
 import "./Articles.scss";
 import ArticleSummary from "./ArticleSingle/ArticleSummary";
 import ArticleTitle from "./ArticleSingle/ArticleTitle";
-import { Link } from "react-router-dom";
 var parseString = require("xml2js").parseString;
 
 class ArticlesDisplay extends Component {
@@ -60,9 +59,7 @@ class ArticlesDisplay extends Component {
     console.log(this.props, "props in container");
     const { articles } = this.state;
     let allArticles = articles.map(a => {
-      let b = a.author.map(author => author.name);
       console.log(a, "a");
-      console.log(b, "b");
       return (
         <div className="article-container">
           <ArticleTitle
@@ -70,17 +67,12 @@ class ArticlesDisplay extends Component {
             title={a.title}
             summary={a.summary}
             published={a.published}
-            author={b}
+            author={a.author}
             match={this.props.match}
           />
         </div>
       );
     });
-
-    // let unique = props.id[0]
-    // .split("")
-    // .slice(21)
-    // .join("");
 
     console.log(this.state.filtered[0], "filter");
     return (
