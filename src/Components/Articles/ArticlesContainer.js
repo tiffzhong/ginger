@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "./Articles.scss";
+import { Link } from "react-router-dom";
 var parseString = require("xml2js").parseString;
 
-class Articles extends Component {
+class ArticlesDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
       articles: []
     };
-    //  this.parseString = this.parseString.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +25,6 @@ class Articles extends Component {
       .then(data => {
         parseString(data.data, function(err, result) {
           p.push(result.feed.entry);
-          console.log(p, "p");
         });
         this.setState({
           articles: p[0]
@@ -40,13 +40,14 @@ class Articles extends Component {
       console.log(b, "b");
       return (
         <div className="article-container">
-          article title: {a.title}
-          <br />
-          published: {a.published}
-          <br />
-          summary: {a.summary}
-          <br />
-          author: {b.join(" ")}
+          Title:
+          <Link to={`/summaries/${a.id[0]}`}>{a.title}</Link>
+          {/* <ArticleSummary
+            key={a.id}
+            summary={a.summary}
+            published={a.published}
+            author={b.join(" ")}
+          /> */}
         </div>
       );
     });
@@ -59,4 +60,4 @@ class Articles extends Component {
     );
   }
 }
-export default Articles;
+export default ArticlesDisplay;
