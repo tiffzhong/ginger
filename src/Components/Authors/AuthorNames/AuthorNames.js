@@ -36,8 +36,11 @@ class AuthorNames extends Component {
   render() {
     // console.log(this.props, "props here");
     const { clickedAuthor } = this.state;
-    console.log(clickedAuthor, "clocksf");
-    return <div>{clickedAuthor}</div>;
+
+    console.log(clickedAuthor, "clickedAuthor");
+    // return <div>{x}</div>;
+
+    return <div />;
   }
 }
 export default AuthorNames;
