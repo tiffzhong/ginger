@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./Articles.scss";
-import ArticleSummary from "./ArticleSingle/ArticleSummary";
-import ArticleTitle from "./ArticleSingle/ArticleTitle";
+import ArticleSummary from "./Article/ArticleSummary";
+import ArticleTitle from "./Article/ArticleTitle";
 var parseString = require("xml2js").parseString;
 
-class ArticlesDisplay extends Component {
+class ArticlesContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,7 @@ class ArticlesDisplay extends Component {
     let p = [];
     axios
       .get(
-        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=30"
+        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=submittedDate&sortOrder=descending&max_results=30"
       )
       .then(data => {
         parseString(data.data, function(err, result) {
@@ -59,7 +59,7 @@ class ArticlesDisplay extends Component {
     console.log(this.props, "props in container");
     const { articles } = this.state;
     let allArticles = articles.map(a => {
-      console.log(a, "a");
+      // console.log(a, "a");
       return (
         <div className="article-container">
           <ArticleTitle
@@ -74,7 +74,7 @@ class ArticlesDisplay extends Component {
       );
     });
 
-    console.log(this.state.filtered[0], "filter");
+    // console.log(this.state.filtered[0], "filter");
     return (
       <div>
         {this.props.match.path === "/summaries/:id" &&
@@ -92,4 +92,4 @@ class ArticlesDisplay extends Component {
     );
   }
 }
-export default ArticlesDisplay;
+export default ArticlesContainer;

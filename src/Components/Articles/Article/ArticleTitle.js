@@ -1,7 +1,7 @@
 import React from "react";
 import "../Articles.scss";
 import { Link } from "react-router-dom";
-import ArticleSummary from "./ArticleSummary";
+
 const ArticleTitle = props => {
   console.log(props, "props in article titles");
   let unique = props.id[0]
