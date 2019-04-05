@@ -15,6 +15,7 @@ class AuthorsList extends Component {
     this.getAuthors();
   }
 
+  //getAuthors method is querying the articles in specified subject, then querying a search for author names of the articles to get the count/length of how many articles they have published in the past 30 days.
   getAuthors = () => {
     let auth = [];
     axios
@@ -42,6 +43,7 @@ class AuthorsList extends Component {
                     results: result.feed.entry,
                     name: t.name
                   });
+                  //this method inside map is slowing down author name render time
                   this.setState({
                     authors: authorsCopy
                   });
@@ -54,17 +56,40 @@ class AuthorsList extends Component {
   };
 
   render() {
-    let mappedAuthors = this.state.authors.map(author => (
-      <div>
-        <Link
-          to={`/authorsName/${author.name}`}
-          // onClick={() => this.searchAuthor(author.name)}
-        >
-          {author.name}
-        </Link>
-        {author.results !== undefined ? author.results.length : 0}
-      </div>
-    ));
+    let thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    function formatDate(date) {
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+      return year + "-0" + (monthIndex + 1) + "-0" + day;
+    }
+
+    let mappedAuthors = this.state.authors.map(author => {
+      // looking for author's published dates and filtering the count/length in the past 30 days
+      if (author.results) {
+        let publishedDate = author.results.filter(count => {
+          let published = count.published[0]
+            .split("")
+            .splice(0, 10)
+            .join("");
+
+          let thirty = String(formatDate(thirtyDaysAgo));
+          console.log(thirty, "thirty");
+          return published > thirty;
+        });
+        //if and author has not published an article in the past 30 days, it will not render.
+        if (publishedDate.length) {
+          return (
+            <div>
+              <Link to={`/authorsName/${author.name}`}>{author.name}</Link>
+              {publishedDate !== undefined ? publishedDate.length : 0}
+            </div>
+          );
+        }
+      }
+    });
 
     return (
       <div>

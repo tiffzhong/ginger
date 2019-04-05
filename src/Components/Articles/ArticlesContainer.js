@@ -29,6 +29,7 @@ class ArticlesContainer extends Component {
   //Showing 30 results
   getArticles = () => {
     let p = [];
+
     axios
       .get(
         "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=submittedDate&sortOrder=descending&max_results=30"
@@ -36,8 +37,9 @@ class ArticlesContainer extends Component {
       .then(data => {
         parseString(data.data, function(err, result) {
           p.push(result.feed.entry);
-          console.log(p);
+          // console.log(p[0][0].published, "pu");
         });
+
         this.setState({
           articles: p[0]
         });
