@@ -74,9 +74,10 @@ class ArticlesContainer extends Component {
       );
     });
 
-    // console.log(this.state.filtered[0], "filter");
     return (
       <div>
+        <h1>New Articles</h1>
+        <p>Subjects: Psychiatry, Therapy, Data Science, and Machine Learning</p>
         {this.props.match.path === "/summaries/:id" &&
         this.state.filtered[0] ? (
           <ArticleSummary

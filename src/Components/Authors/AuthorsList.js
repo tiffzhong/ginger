@@ -20,12 +20,11 @@ class AuthorsList extends Component {
     let another = [];
     axios
       .get(
-        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=5"
+        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=15"
       )
       .then(data => {
         parseString(data.data, function(err, result) {
           auth.push(result.feed.entry);
-          // console.log(result);
         });
         let mapper = auth[0].map(g => g.author);
 
@@ -55,30 +54,6 @@ class AuthorsList extends Component {
       .catch(err => console.log("author get", err));
   };
 
-  // searchAuthor = authorName => {
-  //   let searched = [];
-  //   console.log(authorName, "namehhh");
-  //   axios
-  //     .get(
-  //       `http://export.arxiv.org/api/query?search_query=au:"${authorName}"&sortBy=submittedDate&sortOrder=descending&max_results=5`
-  //     )
-  //     .then(data => {
-  //       parseString(data.data, function(err, result) {
-  //         searched.push(result.feed.entry);
-  //       });
-  //       // console.log(searched, "searched");
-  //       // let newVar = searched[0].map(r => r.title);
-  //       // this.setState({
-  //       //   clickedAuthor: searched
-  //       // });
-  //     })
-  //     .catch(err => console.log("search get", err));
-  //   console.log(searched, "searched");
-  //   this.setState({
-  //     clickedAuthor: searched
-  //   });
-  // };
-
   render() {
     let mappedAuthors = this.state.authors.map(author => (
       <div>
@@ -87,12 +62,17 @@ class AuthorsList extends Component {
           // onClick={() => this.searchAuthor(author.name)}
         >
           {author.name}
-          {author.results !== undefined ? author.results.length : 0}
         </Link>
+        {author.results !== undefined ? author.results.length : 0}
       </div>
     ));
 
-    return <div>{mappedAuthors}</div>;
+    return (
+      <div>
+        <h1>Authors and # of Articles written over the last 30 days:</h1>
+        {mappedAuthors}
+      </div>
+    );
   }
 }
 export default AuthorsList;

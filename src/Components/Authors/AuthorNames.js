@@ -26,21 +26,31 @@ class AuthorNames extends Component {
         parseString(data.data, function(err, result) {
           searched.push(result.feed.entry);
         });
+        this.setState({
+          clickedAuthor: searched[0]
+        });
       })
       .catch(err => console.log("search get", err));
-    console.log(searched, "searched");
-    this.setState({
-      clickedAuthor: searched
-    });
   };
   render() {
     // console.log(this.props, "props here");
     const { clickedAuthor } = this.state;
-
     console.log(clickedAuthor, "clickedAuthor");
-    // return <div>{x}</div>;
+    let titles = clickedAuthor.map(x => (
+      <div>
+        <ul>
+          <li>{x.title}</li>
+        </ul>
+      </div>
+    ));
 
-    return <div />;
+    console.log(titles);
+    return (
+      <div>
+        <h1> {this.props.match.params.id}</h1>
+        {titles}
+      </div>
+    );
   }
 }
 export default AuthorNames;
