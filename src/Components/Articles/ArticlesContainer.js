@@ -33,7 +33,7 @@ class ArticlesContainer extends Component {
     let p = [];
     axios
       .get(
-        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=submittedDate&sortOrder=descending&max_results=35"
+        "https://cors-anywhere.herokuapp.com/http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=submittedDate&sortOrder=descending&max_results=35"
       )
       .then(data => {
         parseString(data.data, function(err, result) {

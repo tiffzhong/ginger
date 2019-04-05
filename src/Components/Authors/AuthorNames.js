@@ -31,7 +31,7 @@ class AuthorNames extends Component {
 
     axios
       .get(
-        `http://export.arxiv.org/api/query?search_query=au:"${authorName}"&sortBy=submittedDate&sortOrder=descending&max_results=10`
+        `https://cors-anywhere.herokuapp.com/http://export.arxiv.org/api/query?search_query=au:"${authorName}"&sortBy=submittedDate&sortOrder=descending&max_results=10`
       )
       .then(data => {
         parseString(data.data, function(err, result) {

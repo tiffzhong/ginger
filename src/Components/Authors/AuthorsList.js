@@ -21,7 +21,7 @@ class AuthorsList extends Component {
     let auth = [];
     axios
       .get(
-        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=30"
+        "https://cors-anywhere.herokuapp.com/http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=30"
       )
       .then(data => {
         parseString(data.data, function(err, result) {
@@ -33,7 +33,7 @@ class AuthorsList extends Component {
           v.map(t => {
             axios
               .get(
-                `http://export.arxiv.org/api/query?search_query=au:"${
+                `https://cors-anywhere.herokuapp.com/http://export.arxiv.org/api/query?search_query=au:"${
                   t.name
                 }"&sortBy=submittedDate&sortOrder=descending&max_results=10`
               )
