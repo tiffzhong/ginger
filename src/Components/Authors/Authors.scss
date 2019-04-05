@@ -1,0 +1,33 @@
+.author-page {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  h1 {
+    text-align: center;
+  }
+  p {
+    padding-bottom: 20px;
+  }
+
+  li {
+    text-align: start;
+    line-height: 1.5em;
+  }
+}
+
+.authors-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    padding-bottom: 20px;
+  }
+  .author-link-count {
+    display: flex;
+    align-items: center;
+    p {
+      padding: 0 10px;
+    }
+  }
+}

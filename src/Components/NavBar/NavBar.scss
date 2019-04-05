@@ -1,10 +1,11 @@
 nav {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   width: 100%;
-  height: 50px;
+  height: 40px;
   background-color: maroon;
+  padding-top: 15px;
   a {
+    font-size: 20px;
     margin: 10px;
     text-decoration: none;
     color: white;

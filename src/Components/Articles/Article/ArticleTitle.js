@@ -7,12 +7,13 @@ const ArticleTitle = props => {
     .split("")
     .slice(21)
     .join("");
+  //unique slices the weird id 'http' the API provides
   return (
-    <div>
+    <>
       <Link to={`/summaries/${unique}`} alt="articlelink">
         {props.title}
       </Link>
-    </div>
+    </>
   );
 };
 export default ArticleTitle;

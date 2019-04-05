@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./Authors.scss";
 var parseString = require("xml2js").parseString;
 
 class AuthorsList extends Component {
@@ -20,7 +21,7 @@ class AuthorsList extends Component {
     let auth = [];
     axios
       .get(
-        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=15"
+        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=30"
       )
       .then(data => {
         parseString(data.data, function(err, result) {
@@ -34,7 +35,7 @@ class AuthorsList extends Component {
               .get(
                 `http://export.arxiv.org/api/query?search_query=au:"${
                   t.name
-                }"&sortBy=submittedDate&sortOrder=descending&max_results=5`
+                }"&sortBy=submittedDate&sortOrder=descending&max_results=10`
               )
               .then(data => {
                 parseString(data.data, (err, result) => {
@@ -76,15 +77,15 @@ class AuthorsList extends Component {
             .join("");
 
           let thirty = String(formatDate(thirtyDaysAgo));
-          console.log(thirty, "thirty");
+
           return published > thirty;
         });
         //if and author has not published an article in the past 30 days, it will not render.
-        if (publishedDate.length) {
+        if (publishedDate.length > 0) {
           return (
-            <div>
+            <div className="author-link-count">
               <Link to={`/authorsName/${author.name}`}>{author.name}</Link>
-              {publishedDate !== undefined ? publishedDate.length : 0}
+              <p>{publishedDate !== undefined ? publishedDate.length : 0}</p>
             </div>
           );
         }
@@ -92,8 +93,9 @@ class AuthorsList extends Component {
     });
 
     return (
-      <div>
-        <h1>Authors and # of Articles written over the last 30 days:</h1>
+      <div className="authors-list-container">
+        <h1>Authors </h1>
+        <p>and the # of Articles written in the last 30 days</p>
         {mappedAuthors}
       </div>
     );

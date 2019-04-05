@@ -17,6 +17,8 @@ class ArticlesContainer extends Component {
   componentDidMount() {
     this.getArticles();
   }
+
+  //run filtered method after user clicks an article title
   componentDidUpdate(prevProps) {
     if (prevProps.match.path !== this.props.match.path) {
       this.filtered();
@@ -26,20 +28,17 @@ class ArticlesContainer extends Component {
   //Search querying articles related to psychiatry, therapy, data science, or machine learning.
   //Sorting by submit date
   //Sort order is descending (most recent first)
-  //Showing 30 results
+  //Showing 35 results and pushing in p array (global variable)
   getArticles = () => {
     let p = [];
-
     axios
       .get(
-        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=submittedDate&sortOrder=descending&max_results=30"
+        "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=submittedDate&sortOrder=descending&max_results=35"
       )
       .then(data => {
         parseString(data.data, function(err, result) {
           p.push(result.feed.entry);
-          // console.log(p[0][0].published, "pu");
         });
-
         this.setState({
           articles: p[0]
         });
@@ -47,6 +46,7 @@ class ArticlesContainer extends Component {
       .catch(err => console.log("axios get", err));
   };
 
+  //Using this.props.match.path to filter through this.state.articles, reusing the API call from getArticles method. then setting a new state (filtered) to show the selected article's summary.
   filtered = () => {
     if (this.props.match.path === "/summaries/:id") {
       let filteredArticle = this.state.articles.filter(article => {
@@ -63,38 +63,40 @@ class ArticlesContainer extends Component {
   };
 
   render() {
-    console.log(this.props, "props in container");
     const { articles } = this.state;
     let allArticles = articles.map(a => {
-      // console.log(a, "a");
       return (
-        <div className="article-container">
-          <ArticleTitle
-            id={a.id}
-            title={a.title}
-            summary={a.summary}
-            published={a.published}
-            author={a.author}
-            match={this.props.match}
-          />
-        </div>
+        <ArticleTitle
+          id={a.id}
+          title={a.title}
+          summary={a.summary}
+          published={a.published}
+          author={a.author}
+          match={this.props.match}
+        />
       );
     });
 
     return (
-      <div>
-        <h1>New Articles</h1>
-        <p>Subjects: Psychiatry, Therapy, Data Science, and Machine Learning</p>
+      <div className="">
         {this.props.match.path === "/summaries/:id" &&
         this.state.filtered[0] ? (
-          <ArticleSummary
-            title={this.state.filtered[0].title}
-            summary={this.state.filtered[0].summary}
-            published={this.state.filtered[0].published}
-            author={this.state.filtered[0].author}
-          />
+          <>
+            <ArticleSummary
+              title={this.state.filtered[0].title}
+              summary={this.state.filtered[0].summary}
+              published={this.state.filtered[0].published}
+              author={this.state.filtered[0].author}
+            />
+          </>
         ) : (
-          allArticles
+          <div className="articles-container">
+            <h1>New Articles</h1>
+            <p>
+              Subjects: Psychiatry, Therapy, Data Science, and Machine Learning
+            </p>
+            {allArticles}
+          </div>
         )}
       </div>
     );

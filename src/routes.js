@@ -3,9 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import ArticlesContainer from "./Components/Articles/ArticlesContainer";
 import AuthorsList from "./Components/Authors/AuthorsList";
 import AuthorNames from "./Components/Authors/AuthorNames";
-import ArticleSummary from "./Components/Articles/Article/ArticleSummary";
+
 export default (
   <Switch>
+    <Route exact path="/" component={ArticlesContainer} />
     <Route path="/articles" component={ArticlesContainer} />
     <Route path="/authors" component={AuthorsList} />
     <Route path="/authorsName/:id" component={AuthorNames} />

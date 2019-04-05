@@ -2,25 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../Articles.scss";
 
+//instead of making this a class component, props are passed down from articles container to show summary
 const ArticleSummary = props => {
-  console.log(props, "props in articleSummary");
   let authors = props.author.map(x => {
     return (
-      <div className="author-names">
+      <>
         <Link to={`/authorsName/${x.name}`}>{x.name}</Link>
-      </div>
+      </>
     );
   });
 
   return (
-    <div>
-      Title:{props.title}
+    <div className="article-summary">
+      <h1>Article Summary</h1>
+      <p>Title: {props.title}</p>
       <br />
-      Authors:{authors}
+      <p>Authors:{authors}</p>
       <br />
-      Published: {props.published}
+      <p>Published: {props.published}</p>
       <br />
-      Summary: {props.summary}
+      <p> Summary: {props.summary}</p>
     </div>
   );
 };

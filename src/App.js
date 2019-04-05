@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NavBar from "./Components/NavBar/NavBar";
+import "./reset.scss";
 import "./App.scss";
 import routes from "./routes";
 

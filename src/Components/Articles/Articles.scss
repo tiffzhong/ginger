@@ -1,13 +1,31 @@
-.article-container {
-  border: 1px solid black;
+.articles-container {
   display: flex;
-}
-.author-names {
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  p {
+    padding-bottom: 20px;
+  }
   a {
+    text-align: center;
+  }
+}
+.article-summary {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  a {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     color: maroon;
     &:hover {
       color: black;
     }
+  }
+  p {
+    line-height: 1.5em;
   }
 }
