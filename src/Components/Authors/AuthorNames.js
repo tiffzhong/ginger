@@ -14,10 +14,10 @@ class AuthorNames extends Component {
   }
 
   searchAuthor = authorName => {
-    console.log(this.props.match.params.id, "params");
+    // console.log(this.props.match.params.id, "params");
     authorName = this.props.match.params.id;
     let searched = [];
-    console.log(authorName, "name");
+
     axios
       .get(
         `http://export.arxiv.org/api/query?search_query=au:"${authorName}"&sortBy=submittedDate&sortOrder=descending&max_results=5`
@@ -44,7 +44,6 @@ class AuthorNames extends Component {
       </div>
     ));
 
-    console.log(titles);
     return (
       <div>
         <h1> {this.props.match.params.id}</h1>

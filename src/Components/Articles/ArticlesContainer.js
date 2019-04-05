@@ -23,6 +23,10 @@ class ArticlesContainer extends Component {
     }
   }
 
+  //Search querying articles related to psychiatry, therapy, data science, or machine learning.
+  //Sorting by submit date
+  //Sort order is descending (most recent first)
+  //Showing 30 results
   getArticles = () => {
     let p = [];
     axios
@@ -32,6 +36,7 @@ class ArticlesContainer extends Component {
       .then(data => {
         parseString(data.data, function(err, result) {
           p.push(result.feed.entry);
+          console.log(p);
         });
         this.setState({
           articles: p[0]

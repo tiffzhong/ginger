@@ -17,7 +17,6 @@ class AuthorsList extends Component {
 
   getAuthors = () => {
     let auth = [];
-    let another = [];
     axios
       .get(
         "http://export.arxiv.org/api/query?search_query=all:psychiatry+OR+all:therapy+OR+all:data+science+OR+all:machine+learning&sortBy=lastUpdatedDate&sortOrder=descending&max_results=15"

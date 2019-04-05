@@ -3,7 +3,6 @@ import "../Articles.scss";
 import { Link } from "react-router-dom";
 
 const ArticleTitle = props => {
-  console.log(props, "props in article titles");
   let unique = props.id[0]
     .split("")
     .slice(21)
